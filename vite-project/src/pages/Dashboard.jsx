@@ -32,8 +32,10 @@ const columns = (handleEdit) => [
 
 function Dashboard() {
   const [data, setData] = useState([]);
- 
-
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [editRow, setEditRow] = useState({});
+  const [isAddMode, setIsAddMode] = useState(false);
 
   useEffect(() => {
     fetch("https://67f021af2a80b06b88970595.mockapi.io/dataTable")
@@ -51,6 +53,25 @@ function Dashboard() {
   };
 
 
+  const handleSave = () => {
+    if (isAddMode) {
+      const newId = (Math.max(...data.map(item => parseInt(item.id)), 0) + 1).toString();
+      const newUser = { ...editRow, id: newId };
+      setData(prevData => [...prevData, newUser]);
+    } else {
+      setData(prevData =>
+        prevData.map(item =>
+          item.id === editRow.id ? { ...editRow } : item
+        )
+      );
+    }
+    setShowModal(false);
+  };
+
+  const handleDelete = () => {
+    setData(prevData => prevData.filter(item => item.id !== editRow.id));
+    setShowModal(false);
+  };
   
   const handleExport = async () => {
     try {
@@ -90,7 +111,7 @@ function Dashboard() {
         <div className="mt-1 ml-115">
             <div>
                 <span
-                  className="text-pink-400 border-2 border-pink-400 p-2 mr-2 rounded-lg cursor-pointer hover:bg-pink-400 hover:text-white font-bold"                
+                  className="text-pink-400 border-2 border-pink-400 p-2 mr-2 rounded-lg cursor-pointer hover:bg-pink-400 hover:text-white font-bold"
                 >
                   Add user
                 </span>
@@ -121,7 +142,91 @@ function Dashboard() {
         />
       </div>
 
+      {showModal && (
+        <div className="fixed inset-0 backdrop-blur-sm bg-black/10 flex items-center justify-center z-50">
+          <div className="bg-white w-120 rounded-xl p-6 shadow-xl relative">
+            <span
+              className="absolute top-3 right-3 text-gray-600 hover:text-black cursor-pointer"
+              onClick={() => setShowModal(false)}
+            >
+              ✕
+            </span>
 
+            <h2 className="text-black mb-10 font-bold text-2xl">
+              {isAddMode ? "THÊM KHÁCH HÀNG" : "THÔNG TIN KHÁCH HÀNG"}
+            </h2>
+
+            <div className="text-left pl-10 mb-4">
+              <label className="text-black mr-10">Customer name:</label>
+              <input
+                type="text"
+                value={editRow.name || ""}
+                onChange={(e) => setEditRow({ ...editRow, name: e.target.value })}
+                className="text-gray-700 border border-gray-500 rounded-sm"
+              />
+            </div>
+
+            <div className="text-left pl-10 mb-4">
+              <label className="text-black mr-10">Company:</label>
+              <input
+                type="text"
+                value={editRow.company || ""}
+                onChange={(e) => setEditRow({ ...editRow, company: e.target.value })}
+                className="text-gray-700 border border-gray-500 rounded-sm ml-11"
+              />
+            </div>
+
+            <div className="text-left pl-10 mb-4">
+              <label className="text-black mr-10">Order Value:</label>
+              <input
+                type="text"
+                value={editRow.orderValue || ""}
+                onChange={(e) => setEditRow({ ...editRow, orderValue: e.target.value })}
+                className="text-gray-700 border border-gray-500 rounded-sm ml-7"
+              />
+            </div>
+
+            <div className="text-left pl-10 mb-4">
+              <label className="text-black mr-10">Order Date:</label>
+              <input
+                type="text"
+                value={editRow.orderDate || ""}
+                onChange={(e) => setEditRow({ ...editRow, orderDate: e.target.value })}
+                className="text-gray-700 border border-gray-500 rounded-sm ml-8"
+              />
+            </div>
+
+            <div className="text-left pl-10 mb-4">
+              <label className="text-black mr-10">Status:</label>
+              <input
+                type="text"
+                value={editRow.status || ""}
+                onChange={(e) => setEditRow({ ...editRow, status: e.target.value })}
+                className="text-gray-700 border border-gray-500 rounded-sm ml-17"
+              />
+            </div>
+
+            <div className="text-center mt-6">
+              {!isAddMode && (
+                <button
+                  className="m-1 px-6 py-2 rounded text-white"
+                  style={{ backgroundColor: "#F08080" }}
+                  onClick={handleDelete}
+                >
+                  Delete
+                </button>
+              )}
+              <button
+                className="m-1 px-6 py-2 rounded text-white"
+                style={{ backgroundColor: "#00BFFF" }}
+                onClick={handleSave}
+              >
+                {isAddMode ? "Save" : "Update"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
