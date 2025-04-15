@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import './App.css'
 import logo from '../src/assets/img/Image 1858.png'
 import dashboard from '../src/assets/img/Squares four 1.png'
@@ -15,10 +16,28 @@ import dollar from  '../src/assets/img/Button 1529.png'
 import icon from '../src/assets/img/Button 1530.png'
 import visily from '../src/assets/img/visily.png'
 
+import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
+
+
 
 
 function App() {
 
+  const [data, setData] = useState([
+    { soLieu: 0, change: 0, id: "1" },
+    { soLieu: 0, change: 0, id: "2" },
+    { soLieu: 0, change: 0, id: "3" }
+  ]);
+  
+  useEffect(() => {
+    fetch('https://67f021af2a80b06b88970595.mockapi.io/Overview')
+      .then(res => res.json())
+      .then(json => setData(json))
+      .catch(err => console.error(err));
+  }, []);
+  
+  
+  
   return (
     
     <>
@@ -62,22 +81,79 @@ function App() {
                 <img src={dashboard} alt="overview-img" className='pl-10'/>
                 <p className='text-black font-bold text-xl ml-5'>Overview</p>
               </div>
+              <div>
 
               <div className='grid grid-cols-3 mt-5'>
                 {/* Turnover */}
                 <div className='bg-pink-200 text-left p-5 ml-10 mr-2 rounded-sm flex'>
-
+                  <div className="w-5/6">
+                    <p className='text-black font-bold'>Turnover</p>
+                    <p className='text-black text-4xl font-bold mt-3'>${data[0].soLieu.toLocaleString()}</p>
+                    <div className='flex mt-3 items-center'>
+                      {data[0].change >= 0 ? (
+                        <FaArrowUp className='text-green-600 mr-1 text-xs' />
+                      ) : (
+                        <FaArrowDown className='text-red-600 mr-1 text-xs' />
+                      )}
+                      <p className={data[0].change >= 0 ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
+                        {Math.abs(data[0].change)}%
+                      </p>
+                      <p className='text-black ml-2'>period of change</p>
+                    </div>
+                  </div>
+                  <div>
+                    <img src={giohang} alt="giohang-img" className='hover:bg-pink-300' />
+                  </div>
                 </div>
+
                 {/* Profit */}
                 <div className='bg-blue-100 text-left p-5 ml-6 mr-6 rounded-sm flex'>
-                
+                  <div className="w-5/6">
+                    <p className='text-black font-bold'>Profit</p>
+                    <p className='text-black text-4xl font-bold mt-3'>${data[1].soLieu.toLocaleString()}</p>
+                    <div className='flex mt-3 items-center'>
+                      {data[1].change >= 0 ? (
+                        <FaArrowUp className='text-green-600 mr-1 text-xs' />
+                      ) : (
+                        <FaArrowDown className='text-red-600 mr-1 text-xs' />
+                      )}
+                      <p className={data[1].change >= 0 ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
+                        {Math.abs(data[1].change)}%
+                      </p>
+                      <p className='text-black ml-2'>period of change</p>
+                    </div>
+                  </div>
+                  <div className=''>
+                    <img src={dollar} alt="dollar-img" className='hover:bg-blue-200' />
+                  </div>
                 </div>
 
                 {/* New customer */}
-                <div className='bg-green-100 text-left p-5 ml-2 mr-10 rounded-sm flex'></div>
+                <div className='bg-green-100 text-left p-5 ml-2 mr-10 rounded-sm flex'>
+                  <div className="w-5/6">
+                    <p className='text-black font-bold'>New customer</p>
+                    <p className='text-black text-4xl font-bold mt-3'>{data[2].soLieu.toLocaleString()}</p>
+                    <div className='flex mt-3 items-center'>
+                      {data[2].change >= 0 ? (
+                        <FaArrowUp className='text-green-600 mr-1 text-xs' />
+                      ) : (
+                        <FaArrowDown className='text-red-600 mr-1 text-xs' />
+                      )}
+                      <p className={data[2].change >= 0 ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
+                        {Math.abs(data[2].change)}%
+                      </p>
+                      <p className='text-black ml-2'>period of change</p>
+                    </div>
+                  </div>
+                  <div className=''>
+                    <img src={icon} alt="icon-img" className='hover:bg-green-200' />
+                  </div>
+                </div>
               </div>
-        
+
+              </div>
             </div>
+            
 
           </div>
           
