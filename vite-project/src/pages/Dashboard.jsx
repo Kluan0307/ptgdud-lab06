@@ -52,6 +52,11 @@ function Dashboard() {
     setShowModal(true);
   };
 
+  const handleAddUser = () => {
+    setEditRow({ name: "", company: "", orderValue: "", orderDate: "", status: "" });
+    setIsAddMode(true);
+    setShowModal(true);
+  };
 
   const handleSave = () => {
     if (isAddMode) {
@@ -112,6 +117,7 @@ function Dashboard() {
             <div>
                 <span
                   className="text-pink-400 border-2 border-pink-400 p-2 mr-2 rounded-lg cursor-pointer hover:bg-pink-400 hover:text-white font-bold"
+                  onClick={handleAddUser}
                 >
                   Add user
                 </span>
