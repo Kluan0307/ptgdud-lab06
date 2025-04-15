@@ -16,6 +16,8 @@ import dollar from  '../src/assets/img/Button 1529.png'
 import icon from '../src/assets/img/Button 1530.png'
 import visily from '../src/assets/img/visily.png'
 
+import Dashboard from '../src/pages/Dashboard';
+
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
 
@@ -154,7 +156,9 @@ function App() {
               </div>
             </div>
             
-
+            <div>
+              <Dashboard></Dashboard>
+            </div>
           </div>
           
         </div>

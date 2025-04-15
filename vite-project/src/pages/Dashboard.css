@@ -1,0 +1,28 @@
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+  
+  .status-badge.new {
+    background-color: #d1f4ff;
+    color: #007bff;
+  }
+  
+  .status-badge.in-progress {
+    background-color: #fff4cc;
+    color: #f0ad4e;
+  }
+  
+  .status-badge.completed {
+    background-color: #ccf5d1;
+    color: #28a745;
+  }
+  
+  .dashboard-container {
+    margin: 30px;
+  }
+  
+  
