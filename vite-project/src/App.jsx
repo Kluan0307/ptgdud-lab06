@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter, Router, Route, Routes, Link } from 'react-router-dom'
 import './App.css'
 import logo from '../src/assets/img/Image 1858.png'
 import dashboard from '../src/assets/img/Squares four 1.png'
@@ -17,6 +18,11 @@ import icon from '../src/assets/img/Button 1530.png'
 import visily from '../src/assets/img/visily.png'
 
 import Dashboard from '../src/pages/Dashboard';
+import Projects from '../src/pages/Projects';
+import Teams from '../src/pages/Teams';
+import Analytics from '../src/pages/Analytics';
+import Messages from '../src/pages/Messages';
+import Integrations from '../src/pages/Integrations'
 
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
@@ -43,18 +49,19 @@ function App() {
   return (
     
     <>
+    <BrowserRouter>
         <div className='flex'>
 
           <div className='menu w-1/5 shadow-lg'>
             <img src={logo} alt="logo_img" className='mb-5 py-5 px-10'/>
             <div className='mb-30'>
               <ul className='list-none px-10'>
-                <li className='mb-5 group '><b><span className='font-bold text-gray-500 flex hover:text-white'><img src={dashboard} alt="" className='mr-2'/>Dasboard</span></b></li>
-                <li className='mb-5 group'><b><span className='font-bold text-gray-500 flex'><img src={projects} alt="" className='mr-2'/>Projects</span></b></li>
-                <li className='mb-5 group'><b><span className='font-bold text-gray-500 flex hover:text-white'><img src={teams} alt="" className='mr-2'/>Teams</span></b></li>
-                <li className='mb-5 group'><b><span className='font-bold text-gray-500 flex hover:text-white'><img src={analytics} alt="" className='mr-2'/>Analytics</span></b></li>
-                <li className='mb-5 group'><b><span className='font-bold text-gray-500 flex hover:text-white'><img src={messages} alt="" className='mr-2'/>Messages</span></b></li>
-                <li className='mb-5 group'><b><span className='font-bold text-gray-500 flex hover:text-white'><img src={code} alt="" className='mr-2'/>Integrations</span></b></li>
+                <li className='mb-5 group '><Link to="/" className='hover:bg-pink-400 block w-full p-2 -m-2 rounded-sm'><b><span className='font-bold text-gray-500 flex hover:text-white'><img src={dashboard} alt="" className='mr-2'/>Dasboard</span></b></Link></li>
+                <li className='mb-5 group'><Link to="/projects" className='hover:bg-pink-400 block w-full p-2 -m-2 rounded-sm'><b><span className='font-bold text-gray-500 flex'><img src={projects} alt="" className='mr-2'/>Projects</span></b></Link></li>
+                <li className='mb-5 group'><Link to="/teams" className='hover:bg-pink-400 block w-full p-2 -m-2 rounded-sm'><b><span className='font-bold text-gray-500 flex hover:text-white'><img src={teams} alt="" className='mr-2'/>Teams</span></b></Link></li>
+                <li className='mb-5 group'><Link to="/analytics" className='hover:bg-pink-400 block w-full p-2 -m-2 rounded-sm'><b><span className='font-bold text-gray-500 flex hover:text-white'><img src={analytics} alt="" className='mr-2'/>Analytics</span></b></Link></li>
+                <li className='mb-5 group'><Link to="/messages" className='hover:bg-pink-400 block w-full p-2 -m-2 rounded-sm'><b><span className='font-bold text-gray-500 flex hover:text-white'><img src={messages} alt="" className='mr-2'/>Messages</span></b></Link></li>
+                <li className='mb-5 group'><Link to="/integrations" className='hover:bg-pink-400 block w-full p-2 -m-2 rounded-sm'><b><span className='font-bold text-gray-500 flex hover:text-white'><img src={code} alt="" className='mr-2'/>Integrations</span></b></Link></li>
               </ul>
             </div>
             <div className='bg-blue-100 p-5 rounded-sm m-5'>
@@ -157,11 +164,20 @@ function App() {
             </div>
             
             <div>
-              <Dashboard></Dashboard>
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/teams" element={<Teams />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/messages" element={<Messages />} />
+                <Route path="/integrations" element={<Integrations />} />
+              </Routes>
             </div>
           </div>
           
         </div>
+
+        </BrowserRouter>
     </>
   )
 }
